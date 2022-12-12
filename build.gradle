@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.6'
+    id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -19,19 +19,28 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.7.1'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-freemarker'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    //testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.openapitools:openapi-generator:6.2.0'
+    implementation "javax.validation:validation-api:2.0.1.Final"
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 }
 
 tasks.named('test') {
