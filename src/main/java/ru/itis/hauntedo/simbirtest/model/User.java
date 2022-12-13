@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import ru.itis.hauntedo.simbirtest.utils.enums.Role;
+import ru.itis.hauntedo.simbirtest.utils.enums.State;
 
 import javax.persistence.*;
 
@@ -17,7 +18,17 @@ import javax.persistence.*;
 @Entity
 @SuperBuilder
 @Table(name = "account")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends AbstractEntity {
+
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "middle_name")
+    private String middleName;
 
     @Column(name = "phone", unique = true)
     private String phone;
@@ -32,6 +43,9 @@ public class User extends AbstractEntity {
     @Column(name = "user_role", nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_state", nullable = false)
+    private State state;
 
 
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.checkerframework.checker.units.qual.N;
 
 import javax.persistence.*;
@@ -15,17 +16,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@SuperBuilder
 @Table(name = "doctor")
-public class Doctor extends AbstractEntity {
-
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-
-    @Column(name = "middle_name")
-    private String middleName;
+public class Doctor extends User {
 
     @Column(name = "doctor_experience")
     private Integer experience;
@@ -39,9 +32,5 @@ public class Doctor extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "medical_service_id", referencedColumnName = "id")
     )
     private Set<MedicalService> medicalServices = new HashSet<>();
-
-    @OneToOne
-    @JoinColumn(name = "account_id")
-    private User user;
 
 }
