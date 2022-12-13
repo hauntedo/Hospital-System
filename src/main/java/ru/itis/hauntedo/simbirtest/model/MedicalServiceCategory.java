@@ -19,10 +19,10 @@ import javax.persistence.Table;
 @Table(name = "medical_service_category")
 public class MedicalServiceCategory extends AbstractEntity {
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "category_title", nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "category_description")
     private String description;
 
 }

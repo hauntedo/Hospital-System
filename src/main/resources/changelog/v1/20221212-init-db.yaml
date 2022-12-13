@@ -1,0 +1,196 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: hauntedo
+      changes:
+        - createTable:
+            tableName: medical_service_category
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_medical_service_category
+              - column:
+                  name: create_date
+                  type: timestamp without time zone
+                  defaultValueComputed: now()
+              - column:
+                  name: category_title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_description
+                  type: text
+
+        - createTable:
+            tableName: file
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_file
+              - column:
+                  name: create_date
+                  type: timestamp without time zone
+                  defaultValueComputed: now()
+              - column:
+                  name: file_type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: object_id
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_size
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: original_file_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content_type
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_account
+              - column:
+                  name: create_date
+                  type: timestamp without time zone
+                  defaultValueComputed: now()
+              - column:
+                  name: phone
+                  type: varchar(25)
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: uq_account_phone
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+                    uniqueConstraintName: uq_account_email
+              - column:
+                  name: hash_password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_role
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: user_avatar
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_avatar
+              - column:
+                  name: create_date
+                  type: timestamp without time zone
+                  defaultValueComputed: now()
+              - column:
+                  name: file_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_user_avatar_file
+                    references: file(id)
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_user_avatar_account
+                    references: account(id)
+        - createTable:
+            tableName: patient
+            columns:
+              - column:
+                  name: patient_policy
+                  type: int
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uq_patient_policy
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_patient_account
+                    references: account(id)
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: middle_name
+                  type: varchar(255)
+        - createTable:
+            tableName: doctor
+            columns:
+              - column:
+                  name: doctor_experience
+                  type: int
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_doctor_account
+                    references: account(id)
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: middle_name
+                  type: varchar(255)
+              - column:
+                  name: doctor_education
+                  type: varchar(255)
+              - column:
+                  name: photo_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_doctor_photo
+                    references: file(id)
+
+
+

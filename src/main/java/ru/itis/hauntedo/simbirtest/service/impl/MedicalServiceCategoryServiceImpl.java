@@ -72,7 +72,7 @@ public class MedicalServiceCategoryServiceImpl implements MedicalServiceCategory
         MedicalServiceCategory medicalServiceCategory = medicalServiceCategoryRepository
                 .findById(medicalServiceCategoryId)
                 .orElseThrow(MedicalServiceCategoryNotFoundException::new);
-        medicalServiceCategoryMapper.updateMedicalServiceCategory(medicalServiceCategory ,medicalServiceCategoryRequest);
+        medicalServiceCategoryMapper.updateMedicalServiceCategory(medicalServiceCategory,medicalServiceCategoryRequest);
         log.info("Update medical service category: {}", medicalServiceCategoryId);
         return medicalServiceCategoryMapper.toMedicalServiceCategoryResponse(
                 medicalServiceCategoryRepository.save(medicalServiceCategory));
