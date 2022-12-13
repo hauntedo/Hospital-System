@@ -3,6 +3,7 @@ package ru.itis.hauntedo.simbirtest.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.hauntedo.simbirtest.dto.request.CreateUserRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdatePasswordRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdateUserRequest;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
                         .orElseThrow(UserNotFoundException::new));
     }
 
+    @Transactional
     @Override
     public UUID createUser(CreateUserRequest createUserRequest) {
         log.info("Check email {}, phone {}", createUserRequest.getEmail(), createUserRequest.getPhone());
@@ -72,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Transactional
     @Override
     public UUID confirmUser(UUID confirmCode) {
         User user = confirmService.getConfirmCode(confirmCode).getUser();

@@ -23,7 +23,7 @@ import java.util.UUID;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 
-@RequestMapping("/api/medical-services/categories")
+@RequestMapping("/api/medical-service-categories")
 public interface MedicalServiceCategoryApi {
 
     @Operation(summary = "Get all medical service categories")
@@ -70,7 +70,7 @@ public interface MedicalServiceCategoryApi {
                                     @Schema(implementation = MedicalServiceCategoryResponse.class)
                             )
                     }),
-            @ApiResponse(responseCode = "400", description = "Occupied medical service category code or validation error",
+            @ApiResponse(responseCode = "400", description = "Occupied medical service category or validation error",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema =

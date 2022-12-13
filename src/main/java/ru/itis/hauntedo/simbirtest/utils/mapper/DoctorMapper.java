@@ -1,5 +1,6 @@
 package ru.itis.hauntedo.simbirtest.utils.mapper;
 
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import ru.itis.hauntedo.simbirtest.dto.request.CreateUserRequest;
@@ -13,7 +14,7 @@ import ru.itis.hauntedo.simbirtest.service.UserService;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = UserMapper.class)
 public interface DoctorMapper {
 
     DoctorResponse toDoctorResponse(Doctor doctor);
