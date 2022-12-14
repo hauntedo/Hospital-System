@@ -6,4 +6,6 @@ import ru.itis.hauntedo.simbirtest.model.MedicalService;
 import java.util.UUID;
 
 public interface MedicalServiceRepository extends JpaRepository<MedicalService, UUID> {
+
+
 }

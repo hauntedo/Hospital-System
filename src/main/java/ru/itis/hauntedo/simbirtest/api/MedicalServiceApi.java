@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.itis.hauntedo.simbirtest.dto.request.AddDoctorToServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.MedicalServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdateMedicalServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.response.*;
@@ -16,6 +17,7 @@ import ru.itis.hauntedo.simbirtest.validation.ValidationError;
 
 import javax.validation.Valid;
 
+import java.util.Set;
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.*;
@@ -120,6 +122,10 @@ public interface MedicalServiceApi {
     })
     @DeleteMapping(value = "/{id}")
     ResponseEntity<SuccessResponse> deleteMedicalServiceById(@PathVariable("id") UUID medicalServiceId);
+
+    @PostMapping(value = "/{id}/doctors", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    ResponseEntity<Set<DoctorResponse>> addDoctorToService(@PathVariable("id") UUID medicalServiceId,
+                                                           @RequestBody AddDoctorToServiceRequest serviceRequest);
 
 
 }

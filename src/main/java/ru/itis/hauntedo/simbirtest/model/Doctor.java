@@ -26,11 +26,7 @@ public class Doctor extends User {
     @Column(name = "doctor_education")
     private String education;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "doctor_medical_service",
-            joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "medical_service_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "doctors")
     private Set<MedicalService> medicalServices = new HashSet<>();
 
 }

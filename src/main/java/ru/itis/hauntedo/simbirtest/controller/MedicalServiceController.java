@@ -5,14 +5,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.hauntedo.simbirtest.api.MedicalServiceApi;
+import ru.itis.hauntedo.simbirtest.dto.request.AddDoctorToServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.MedicalServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdateMedicalServiceRequest;
+import ru.itis.hauntedo.simbirtest.dto.response.DoctorResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.MedicalServiceResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.PageResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
 import ru.itis.hauntedo.simbirtest.service.MedicalServiceService;
 
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -49,5 +52,10 @@ public class MedicalServiceController implements MedicalServiceApi {
                         .time(Instant.now())
                         .message("Medical service deleted successfully")
                 .build());
+    }
+
+    @Override
+    public ResponseEntity<Set<DoctorResponse>> addDoctorToService(UUID medicalServiceId, AddDoctorToServiceRequest serviceRequest) {
+        return ResponseEntity.status(201).body(medicalServiceService.addDoctorToService(medicalServiceId, serviceRequest));
     }
 }

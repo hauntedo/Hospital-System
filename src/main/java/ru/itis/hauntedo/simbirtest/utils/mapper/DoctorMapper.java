@@ -13,6 +13,7 @@ import ru.itis.hauntedo.simbirtest.model.User;
 import ru.itis.hauntedo.simbirtest.service.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = UserMapper.class)
 public interface DoctorMapper {
@@ -25,4 +26,6 @@ public interface DoctorMapper {
 
 
     List<DoctorResponse> toList(List<Doctor> doctors);
+
+    Set<DoctorResponse> toSet(Set<Doctor> doctorSet);
 }

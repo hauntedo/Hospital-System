@@ -28,7 +28,11 @@ public class MedicalService extends AbstractEntity {
     @Column(name = "medical_service_cost", nullable = false)
     private Double cost;
 
-    @ManyToMany(mappedBy = "medicalServices")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "medical_service_doctor",
+            joinColumns = @JoinColumn(name = "medical_service_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    )
     private Set<Doctor> doctors = new HashSet<>();
 
     @OneToOne
