@@ -8,6 +8,7 @@ import ru.itis.hauntedo.simbirtest.model.ConfirmCode;
 import ru.itis.hauntedo.simbirtest.model.User;
 import ru.itis.hauntedo.simbirtest.repository.ConfirmCodeRepository;
 import ru.itis.hauntedo.simbirtest.service.ConfirmService;
+import ru.itis.hauntedo.simbirtest.service.EmailService;
 import ru.itis.hauntedo.simbirtest.utils.enums.ConfirmCodeState;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class ConfirmServiceImpl implements ConfirmService {
 
 
     private final ConfirmCodeRepository confirmCodeRepository;
-    //private final EmailService emailService;
+    private final EmailService emailService;
 
     @Override
     public void createConfirmCode(User user) {
@@ -34,11 +35,11 @@ public class ConfirmServiceImpl implements ConfirmService {
                 .confirmCode(UUID.randomUUID())
                 .confirmCodeState(NOT_EXPIRED)
                 .build();
-//        Map<String, String> emailData = new HashMap<>();
-//        emailData.put("user_email", user.getEmail());
-//        emailData.put("user_firstname", user.getFirstName());
-//        emailData.put("confirm_code", confirmCode.getConfirmCode().toString());
-//        emailService.send(emailData, "Confirm account");
+        Map<String, String> emailData = new HashMap<>();
+        emailData.put("user_email", user.getEmail());
+        emailData.put("user_firstname", user.getFirstName());
+        emailData.put("confirm_code", confirmCode.getConfirmCode().toString());
+        emailService.send(emailData, "Confirm account");
         confirmCodeRepository.save(confirmCode);
     }
 

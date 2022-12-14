@@ -2,14 +2,14 @@ package ru.itis.hauntedo.simbirtest.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.hauntedo.simbirtest.dto.request.CreateUserRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UpdatePasswordRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UpdateUserRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UserRequest;
+import ru.itis.hauntedo.simbirtest.dto.request.*;
 import ru.itis.hauntedo.simbirtest.dto.response.UserResponse;
 import ru.itis.hauntedo.simbirtest.exception.badrequest.BadConfirmationException;
+import ru.itis.hauntedo.simbirtest.exception.badrequest.BadDataException;
+import ru.itis.hauntedo.simbirtest.exception.badrequest.FailureLoginException;
 import ru.itis.hauntedo.simbirtest.exception.badrequest.OccupiedDataException;
 import ru.itis.hauntedo.simbirtest.exception.notfound.UserNotFoundException;
 import ru.itis.hauntedo.simbirtest.model.User;
@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private final ConfirmService confirmService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse getUserById(UUID id) {
@@ -58,7 +59,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse login(UserRequest userRequest) {
-        return null;
+        return userRepository.findOneByEmail(userRequest.getEmail())
+                .filter(user -> passwordEncoder.matches(userRequest.getPassword(), user.getHashPassword()))
+                .map(userMapper::toUserResponse)
+                .orElseThrow(FailureLoginException::new);
+    }
+
+
+    @Override
+    public UserResponse findBySubject(String subject) {
+        return userMapper.toUserResponse(userRepository.findOneByEmail(subject)
+                .orElseThrow(UserNotFoundException::new));
     }
 
     @Override
@@ -71,7 +82,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updatePassword(UUID userId, UpdatePasswordRequest passwordRequest) {
-
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        if (passwordEncoder.matches(passwordRequest.getOldPassword(), user.getHashPassword())) {
+            if (passwordRequest.getNewPassword().equals(passwordRequest.getRepeatPassword())) {
+                user.setHashPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
+                userRepository.save(user);
+            } else {
+                throw new BadDataException("Repeat and new passwords dont match");
+            }
+        } else {
+            throw new BadDataException("Old password doesnt match");
+        }
     }
 
     @Transactional
@@ -84,6 +106,22 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(user).getId();
         } else {
             throw new BadConfirmationException("Confirmation failure");
+        }
+    }
+
+    @Override
+    public UserResponse createPassword(UUID userId, UserPasswordRequest passwordRequest) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        if (user.getState().name().equals("CONFIRMED")){
+            if (passwordRequest.getPassword().equals(passwordRequest.getRepeatPassword())) {
+                user.setHashPassword(passwordEncoder.encode(passwordRequest.getPassword()));
+                return userMapper.toUserResponse(userRepository.save(user));
+            } else {
+                throw new BadDataException("Repeat and new password dont match");
+            }
+        } else {
+            throw new BadConfirmationException("Account not confirmed");
         }
     }
 }

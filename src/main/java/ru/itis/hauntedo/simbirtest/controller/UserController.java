@@ -5,13 +5,14 @@ import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.hauntedo.simbirtest.api.UserApi;
-import ru.itis.hauntedo.simbirtest.dto.request.CreateUserRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UpdatePasswordRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UpdateUserRequest;
+import ru.itis.hauntedo.simbirtest.dto.TokenPairResponse;
+import ru.itis.hauntedo.simbirtest.dto.request.*;
 import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.UserResponse;
 import ru.itis.hauntedo.simbirtest.service.UserService;
+import ru.itis.hauntedo.simbirtest.service.jwt.JwtTokenService;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class UserController implements UserApi {
 
     private final UserService userService;
+    private final JwtTokenService jwtTokenService;
 
     @Override
     public ResponseEntity<GridFsResource> getPhotoByUserId(UUID userId) {
@@ -52,11 +54,30 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<SuccessResponse> updateUserPassword(UUID userId, UpdatePasswordRequest passwordRequest) {
-        return null;
+        userService.updatePassword(userId, passwordRequest);
+        return ResponseEntity.status(201)
+                .body(
+                        SuccessResponse.builder()
+                                .message("Password updated successfully")
+                                .time(Instant.now())
+                                .build()
+                );
     }
 
     @Override
     public ResponseEntity<UUID> confirm(UUID confirmCode) {
         return ResponseEntity.ok(userService.confirmUser(confirmCode));
+    }
+
+    @Override
+    public ResponseEntity<TokenPairResponse> createPassword(UUID userId, UserPasswordRequest passwordRequest) {
+        return ResponseEntity.ok(
+                jwtTokenService.generateTokenCouple(
+                        userService.createPassword(userId, passwordRequest)));
+    }
+
+    @Override
+    public ResponseEntity<TokenPairResponse> login(UserRequest userRequest) {
+        return ResponseEntity.ok(jwtTokenService.generateTokenCouple(userService.login(userRequest)));
     }
 }

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,5 +26,9 @@ public class DoctorResponse {
     @JsonProperty("user")
     @Schema(name = "user")
     private UserResponse userResponse;
+
+    @JsonProperty("medical_services")
+    @Schema(name = "medical_services")
+    private Set<MedicalServiceResponse> medicalServices = new HashSet<>();
 
 }

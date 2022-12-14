@@ -9,10 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.itis.hauntedo.simbirtest.dto.request.CreateUserRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UpdatePasswordRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UpdateUserRequest;
-import ru.itis.hauntedo.simbirtest.dto.request.UserPasswordRequest;
+import ru.itis.hauntedo.simbirtest.dto.TokenPairResponse;
+import ru.itis.hauntedo.simbirtest.dto.request.*;
 import ru.itis.hauntedo.simbirtest.dto.response.ExceptionResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.UserResponse;
@@ -59,7 +57,7 @@ public interface UserApi {
                             )
                     })
     })
-    //@ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> getUserById(@PathVariable("id") UUID userId);
 
@@ -81,7 +79,7 @@ public interface UserApi {
                             )
                     })
     })
-    //@ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PostMapping(value = "/{id}/photo")
     ResponseEntity<UUID> saveUserPhoto(@PathVariable("id") UUID userId, @RequestParam("file") UUID fileID);
 
@@ -111,7 +109,7 @@ public interface UserApi {
                     }
             )
     })
-    //@ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> updateUser(@PathVariable("id") UUID userId,
                                             @RequestBody @Valid UpdateUserRequest userRequest);
@@ -139,29 +137,29 @@ public interface UserApi {
                             )
                     })
     })
-    //@ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PutMapping(value = "/{id}/photo")
     ResponseEntity<UUID> updateUserPhoto(@PathVariable("id") UUID userId, @RequestParam("file") UUID fileId);
 
-//    @Operation(summary = "User login")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "User authorized",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    schema =
-//                                    @Schema(implementation = TokenPairResponse.class)
-//                            )
-//                    }),
-//            @ApiResponse(responseCode = "400", description = "Incorrect data",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    schema =
-//                                    @Schema(implementation = ExceptionResponse.class)
-//                            )
-//                    })
-//    })
-//    @PostMapping(value = "/login", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-//    ResponseEntity<TokenPairResponse> login(@RequestBody @Valid UserRequest userRequest);
+    @Operation(summary = "User login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User authorized",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema =
+                                    @Schema(implementation = TokenPairResponse.class)
+                            )
+                    }),
+            @ApiResponse(responseCode = "400", description = "Incorrect data",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema =
+                                    @Schema(implementation = ExceptionResponse.class)
+                            )
+                    })
+    })
+    @PostMapping(value = "/login", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    ResponseEntity<TokenPairResponse> login(@RequestBody @Valid UserRequest userRequest);
 
     @Operation(summary = "User registration")
     @ApiResponses(value = {
@@ -219,7 +217,7 @@ public interface UserApi {
                     }
             )
     })
-    //@ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PutMapping(value = "/{id}/password", consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<SuccessResponse> updateUserPassword(@PathVariable("id") UUID userId, @RequestBody @Valid UpdatePasswordRequest passwordRequest);
 
@@ -250,39 +248,39 @@ public interface UserApi {
     @GetMapping(value = "/confirm/{confirm_code}", produces = APPLICATION_JSON_VALUE)
     ResponseEntity<UUID> confirm(@PathVariable("confirm_code") UUID confirmCode);
 
-//    @Operation(summary = "User password")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "User password saved",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    schema =
-//                                    @Schema(implementation = TokenPairResponse.class)
-//                            )
-//                    }),
-//            @ApiResponse(responseCode = "404", description = "User not found",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    schema =
-//                                    @Schema(implementation = ExceptionResponse.class)
-//                            )
-//                    }),
-//            @ApiResponse(responseCode = "400", description = "New and repeat passwords" +
-//                    "dont match or validation error",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    schema =
-//                                    @Schema(implementation = ExceptionResponse.class)
-//                            ),
-//                            @Content(mediaType = "application/json",
-//                                    schema =
-//                                    @Schema(implementation = ValidationError.class)
-//                            )
-//                    }
-//            )
-//    })
-//    @PostMapping(value = "/password/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-//    ResponseEntity<TokenPairResponse> createPassword(@PathVariable("id") UUID userId, @RequestBody @Valid UserPasswordRequest passwordRequest);
-//
+    @Operation(summary = "User password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User password saved",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema =
+                                    @Schema(implementation = TokenPairResponse.class)
+                            )
+                    }),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema =
+                                    @Schema(implementation = ExceptionResponse.class)
+                            )
+                    }),
+            @ApiResponse(responseCode = "400", description = "New and repeat passwords" +
+                    "dont match or validation error",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema =
+                                    @Schema(implementation = ExceptionResponse.class)
+                            ),
+                            @Content(mediaType = "application/json",
+                                    schema =
+                                    @Schema(implementation = ValidationError.class)
+                            )
+                    }
+            )
+    })
+    @PostMapping(value = "/password/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    ResponseEntity<TokenPairResponse> createPassword(@PathVariable("id") UUID userId, @RequestBody @Valid UserPasswordRequest passwordRequest);
+
 
 
 }

@@ -8,7 +8,9 @@ import lombok.experimental.SuperBuilder;
 import org.checkerframework.checker.units.qual.N;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -28,5 +30,8 @@ public class Doctor extends User {
 
     @ManyToMany(mappedBy = "doctors")
     private Set<MedicalService> medicalServices = new HashSet<>();
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments = new ArrayList<>();
 
 }

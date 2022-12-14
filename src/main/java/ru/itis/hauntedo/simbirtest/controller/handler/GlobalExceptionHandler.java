@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.itis.hauntedo.simbirtest.dto.response.ExceptionResponse;
 import ru.itis.hauntedo.simbirtest.exception.GlobalServiceException;
+import ru.itis.hauntedo.simbirtest.exception.unauthorized.AuthenticationHeaderException;
 import ru.itis.hauntedo.simbirtest.validation.ValidationError;
 
 import java.util.HashMap;
@@ -33,15 +35,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-//    @ExceptionHandler({AuthenticationException.class, AuthenticationHeaderException.class})
-//    public final ResponseEntity<ExceptionResponse> onAuthenticationExceptions(AuthenticationException authenticationException) {
-//
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                .body(ExceptionResponse.builder()
-//                        .message(authenticationException.getMessage())
-//                        .exceptionName(authenticationException.getClass().getSimpleName())
-//                        .build());
-//    }
+    @ExceptionHandler({AuthenticationException.class, AuthenticationHeaderException.class})
+    public final ResponseEntity<ExceptionResponse> onAuthenticationExceptions(AuthenticationException authenticationException) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ExceptionResponse.builder()
+                        .message(authenticationException.getMessage())
+                        .exceptionName(authenticationException.getClass().getSimpleName())
+                        .build());
+    }
 
     @ExceptionHandler(GlobalServiceException.class)
     public final ResponseEntity<ExceptionResponse> onGlobalException(GlobalServiceException globalServiceException) {
