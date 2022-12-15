@@ -1,8 +1,8 @@
 package ru.itis.hauntedo.simbirtest.utils.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import ru.itis.hauntedo.simbirtest.dto.request.AppointmentRequest;
+import ru.itis.hauntedo.simbirtest.dto.request.UpdateAppointmentRequest;
 import ru.itis.hauntedo.simbirtest.dto.response.AppointmentResponse;
 import ru.itis.hauntedo.simbirtest.model.Appointment;
 
@@ -15,4 +15,8 @@ public interface AppointmentMapper {
 
     Appointment toEntity(AppointmentRequest appointmentRequest);
     List<AppointmentResponse> toList(List<Appointment> appointments);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    void updateEntity(@MappingTarget Appointment appointment, UpdateAppointmentRequest appointmentRequest);
 }

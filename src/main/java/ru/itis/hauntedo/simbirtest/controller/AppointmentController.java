@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.hauntedo.simbirtest.api.AppointmentApi;
 import ru.itis.hauntedo.simbirtest.dto.request.AppointmentRequest;
+import ru.itis.hauntedo.simbirtest.dto.request.UpdateAppointmentRequest;
 import ru.itis.hauntedo.simbirtest.dto.response.AppointmentResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
 import ru.itis.hauntedo.simbirtest.service.AppointmentService;
@@ -34,4 +35,12 @@ public class AppointmentController implements AppointmentApi {
                         .time(Instant.now())
                 .build());
     }
+
+    @Override
+    public ResponseEntity<AppointmentResponse> updateAppointment(
+            UUID appointmentId, UserDetails userDetails, UpdateAppointmentRequest appointmentRequest) {
+        return ResponseEntity.status(201)
+                .body(appointmentService.updateAppointment(appointmentId, userDetails, appointmentRequest));
+    }
+
 }

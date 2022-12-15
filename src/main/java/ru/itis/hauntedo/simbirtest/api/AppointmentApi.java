@@ -28,4 +28,9 @@ public interface AppointmentApi {
     ResponseEntity<SuccessResponse> cancelAppointment(@PathVariable("id") UUID appointmentId,
                                                       @AuthenticationPrincipal UserDetails userDetails);
 
+    @PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    ResponseEntity<AppointmentResponse> updateAppointment(@PathVariable("id") UUID appointmentId,
+                                                          @AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestBody UpdateAppointmentRequest updateAppointmentRequest);
+
 }
