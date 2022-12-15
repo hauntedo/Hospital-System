@@ -2,6 +2,8 @@ package ru.itis.hauntedo.simbirtest.api;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.hauntedo.simbirtest.dto.request.AppointmentRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdateAppointmentRequest;
@@ -19,9 +21,11 @@ import static org.springframework.http.MediaType.*;
 public interface AppointmentApi {
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    ResponseEntity<AppointmentResponse> makeAppointment(@Valid @RequestBody AppointmentRequest appointmentRequest);
+    ResponseEntity<AppointmentResponse> makeAppointment(@Valid @RequestBody AppointmentRequest appointmentRequest,
+                                                        @AuthenticationPrincipal UserDetails userDetails);
 
     @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    ResponseEntity<SuccessResponse> cancelAppointment(@PathVariable("id") UUID appointmentId);
+    ResponseEntity<SuccessResponse> cancelAppointment(@PathVariable("id") UUID appointmentId,
+                                                      @AuthenticationPrincipal UserDetails userDetails);
 
 }

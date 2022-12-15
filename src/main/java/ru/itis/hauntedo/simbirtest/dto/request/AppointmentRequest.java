@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,9 +21,8 @@ public class AppointmentRequest {
 
     @JsonProperty("date")
     @NotBlank
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @Schema(name = "appointment date")
-    private LocalDateTime date;
+    private Instant date;
 
     @JsonProperty("medical_service_id")
     @NotBlank
@@ -37,4 +37,5 @@ public class AppointmentRequest {
     @NotBlank
     @Schema(name = "doctor id")
     private UUID doctorId;
+
 }

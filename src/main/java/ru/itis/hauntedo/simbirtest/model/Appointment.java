@@ -6,8 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import ru.itis.hauntedo.simbirtest.utils.enums.AppointmentState;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -19,11 +22,12 @@ import java.util.Calendar;
 @Setter
 @SuperBuilder
 @Entity
+@SQLDelete(sql = "update doctor_appointment set appointment_state = 'CANCELLED' where id = ?")
 @Table(name = "doctor_appointment")
 public class Appointment extends AbstractEntity {
 
     @Column(name = "appointment_date")
-    private LocalDateTime date;
+    private Instant date;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
@@ -39,5 +43,9 @@ public class Appointment extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private User patient;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "appointment_state")
+    private AppointmentState appointmentState;
 
 }

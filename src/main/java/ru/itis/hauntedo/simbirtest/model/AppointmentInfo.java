@@ -17,8 +17,9 @@ import javax.persistence.Table;
 @SuperBuilder
 @Getter
 @Setter
+@Entity
 @Table(name = "appointment_info")
-public class AppointmentInfo {
+public class AppointmentInfo extends AbstractEntity{
 
     @OneToOne
     @JoinColumn(name = "appointment_id")

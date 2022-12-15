@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class AppointmentResponse {
 
     @JsonProperty("date")
     @Schema(name = "appointment date")
-    private LocalDateTime date;
+    private Instant date;
 
     @JsonProperty("patient_comment")
     @Schema(name = "patient comment")
