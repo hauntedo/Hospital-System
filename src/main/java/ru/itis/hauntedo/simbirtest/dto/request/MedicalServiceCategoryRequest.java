@@ -23,4 +23,10 @@ public class MedicalServiceCategoryRequest {
     @Schema(description = "medical service category description")
     private String description;
 
+    @JsonProperty("code")
+    @NotBlank
+    @Schema(description = "medical service category code")
+    private String code;
+
+
 }

@@ -100,7 +100,9 @@ public interface DoctorApi {
     })
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     ResponseEntity<PageResponse<DoctorResponse>> getDoctors(@RequestParam(value = "page",required = false) int page,
-                                                            @RequestParam(value = "size", required = false) int size);
+                                                            @RequestParam(value = "size", required = false) int size,
+                                                            @RequestParam(value = "service-code", required = false) String serviceCode,
+                                                            @RequestParam(value = "category-code", required = false) String categoryCode);
 
     @Operation(summary = "Delete doctor by id")
     @ApiResponses(value = {

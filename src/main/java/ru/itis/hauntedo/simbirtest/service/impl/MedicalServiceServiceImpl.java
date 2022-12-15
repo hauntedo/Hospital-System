@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.hauntedo.simbirtest.dto.request.AddDoctorToServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.MedicalServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdateMedicalServiceRequest;
 import ru.itis.hauntedo.simbirtest.dto.response.DoctorResponse;
-import ru.itis.hauntedo.simbirtest.dto.response.MedicalServiceCategoryResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.MedicalServiceResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.PageResponse;
 import ru.itis.hauntedo.simbirtest.exception.notfound.DoctorNotFoundException;
@@ -29,6 +28,8 @@ import ru.itis.hauntedo.simbirtest.utils.mapper.MedicalServiceMapper;
 
 import java.util.Set;
 import java.util.UUID;
+
+import static ru.itis.hauntedo.simbirtest.specification.MedicalServiceSpecification.byCategoryCode;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +77,19 @@ public class MedicalServiceServiceImpl implements MedicalServiceService {
         log.info("Get list of medical services");
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<MedicalService> result = medicalServiceRepository.findAll(pageRequest);
+        return PageResponse.<MedicalServiceResponse>builder()
+                .content(medicalServiceMapper.toList(result.getContent()))
+                .totalElements(result.getTotalElements())
+                .totalPages(result.getTotalPages())
+                .build();
+    }
+
+    @Override
+    public PageResponse<MedicalServiceResponse> getMedicalServicesByCategory(int page, int size, String categoryCode) {
+        Specification<MedicalService> spec = byCategoryCode(categoryCode);
+        log.info("Get list of medical services by category {}: ", categoryCode);
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<MedicalService> result = medicalServiceRepository.findAll(spec, pageRequest);
         return PageResponse.<MedicalServiceResponse>builder()
                 .content(medicalServiceMapper.toList(result.getContent()))
                 .totalElements(result.getTotalElements())

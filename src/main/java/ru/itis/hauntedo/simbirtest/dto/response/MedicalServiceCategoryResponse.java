@@ -27,4 +27,9 @@ public class MedicalServiceCategoryResponse {
     @JsonProperty("description")
     @Schema(name = "medical service category description", example = "Что-то")
     private String description;
+
+    @JsonProperty("code")
+    @Schema(description = "medical service category code")
+    private String code;
+
 }

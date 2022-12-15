@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.hauntedo.simbirtest.dto.request.DoctorRequest;
@@ -24,6 +25,9 @@ import ru.itis.hauntedo.simbirtest.utils.enums.State;
 import ru.itis.hauntedo.simbirtest.utils.mapper.DoctorMapper;
 
 import java.util.UUID;
+
+import static ru.itis.hauntedo.simbirtest.specification.DoctorSpecification.byMedicalServiceCategory;
+import static ru.itis.hauntedo.simbirtest.specification.DoctorSpecification.byMedicalServiceCode;
 
 @Service
 @RequiredArgsConstructor
@@ -69,11 +73,19 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public PageResponse<DoctorResponse> getDoctors(int page, int size) {
+    public PageResponse<DoctorResponse> getDoctors(int page, int size, String serviceCode, String categoryCode) {
+        Specification<Doctor> spec;
+        if (serviceCode != null) {
+            spec = byMedicalServiceCode(serviceCode);
+        } else if (categoryCode != null)  {
+            spec = byMedicalServiceCategory(categoryCode);
+        } else {
+            spec = null;
+        }
         log.info("Get list of doctors");
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Doctor> result = doctorRepository
-                .findAll(pageRequest);
+                .findAll(spec ,pageRequest);
         return PageResponse.<DoctorResponse>builder()
                 .content(doctorMapper.toList(result.getContent()))
                 .totalElements(result.getTotalElements())

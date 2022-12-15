@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,7 +18,9 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "appointment_info")
-public class AppointmentInfo extends AbstractEntity{
+public class AppointmentDetail extends AbstractEntity {
+
+
 
     @OneToOne
     @JoinColumn(name = "appointment_id")

@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +23,11 @@ public class MedicalServiceCategory extends AbstractEntity {
 
     @Column(name = "category_description")
     private String description;
+
+    @Column(name = "medical_service_category_code", unique = true, nullable = false)
+    private String code;
+
+    @OneToMany(mappedBy = "medicalServiceCategory")
+    private List<MedicalService> medicalServices;
 
 }

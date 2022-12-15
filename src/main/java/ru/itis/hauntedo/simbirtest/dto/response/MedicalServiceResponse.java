@@ -32,7 +32,13 @@ public class MedicalServiceResponse {
     @Schema(name = "medical service cost", example = "500.0")
     private Double cost;
 
+    @JsonProperty("code")
+    @Schema(description = "medical service code")
+    private String code;
+
+
     @JsonProperty("medical_service_category")
     @Schema(name = "medical service category")
     private MedicalServiceCategoryResponse medicalServiceCategoryResponse;
+
 }

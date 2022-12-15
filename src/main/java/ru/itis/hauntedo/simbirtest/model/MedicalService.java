@@ -35,8 +35,10 @@ public class MedicalService extends AbstractEntity {
     )
     private Set<Doctor> doctors = new HashSet<>();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "medical_service_category_id")
     private MedicalServiceCategory medicalServiceCategory;
 
+    @Column(name = "medical_service_code", unique = true, nullable = false)
+    private String code;
 }

@@ -33,4 +33,7 @@ public interface AppointmentApi {
                                                           @AuthenticationPrincipal UserDetails userDetails,
                                                           @RequestBody UpdateAppointmentRequest updateAppointmentRequest);
 
+//    @PostMapping(value = "/{id}/details", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+//    ResponseEntity<AppointmentResponse>
+
 }

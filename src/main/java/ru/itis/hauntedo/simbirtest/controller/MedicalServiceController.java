@@ -36,9 +36,14 @@ public class MedicalServiceController implements MedicalServiceApi {
     }
 
     @Override
-    public ResponseEntity<PageResponse<MedicalServiceResponse>> getMedicalServices(int page, int size) {
-        return ResponseEntity.ok(medicalServiceService.getMedicalServices(page, size));
+    public ResponseEntity<PageResponse<MedicalServiceResponse>> getMedicalServicesByCategory(int page, int size, String categoryCode) {
+        return ResponseEntity.ok(medicalServiceService.getMedicalServicesByCategory(page, size, categoryCode));
     }
+
+//    @Override
+//    public ResponseEntity<PageResponse<MedicalServiceResponse>> getMedicalServices(int page, int size) {
+//        return ResponseEntity.ok(medicalServiceService.getMedicalServices(page, size));
+//    }
 
     @Override
     public ResponseEntity<MedicalServiceResponse> updateMedicalServiceById(UpdateMedicalServiceRequest medicalServiceRequest, UUID medicalServiceId) {

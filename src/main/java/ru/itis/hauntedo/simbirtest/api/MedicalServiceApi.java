@@ -65,7 +65,24 @@ public interface MedicalServiceApi {
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     ResponseEntity<MedicalServiceResponse> getMedicalServiceById(@PathVariable("id") UUID medicalServiceId);
 
-    @Operation(summary = "Get all medical services")
+//    @Operation(summary = "Get all medical services")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "List of services",
+//                    content = {
+//                            @Content(mediaType = "application/json",
+//                                    array = @ArraySchema(
+//                                            schema =
+//                                            @Schema(implementation = MedicalServiceCategoryResponse.class))
+//                            )
+//                    })
+//    })
+//    @GetMapping(produces = APPLICATION_JSON_VALUE)
+//    ResponseEntity<PageResponse<MedicalServiceResponse>> getMedicalServices(
+//            @RequestParam(value = "page",required = false) int page,
+//            @RequestParam(value = "size", required = false) int size);
+
+
+    @Operation(summary = "Get all medical services by category")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of services",
                     content = {
@@ -77,9 +94,10 @@ public interface MedicalServiceApi {
                     })
     })
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    ResponseEntity<PageResponse<MedicalServiceResponse>> getMedicalServices(
+    ResponseEntity<PageResponse<MedicalServiceResponse>> getMedicalServicesByCategory(
             @RequestParam(value = "page",required = false) int page,
-            @RequestParam(value = "size", required = false) int size
+            @RequestParam(value = "size", required = false) int size,
+            @RequestParam(value = "code",required = false) String categoryCode
     );
 
     @Operation(summary = "Update medical service by id")

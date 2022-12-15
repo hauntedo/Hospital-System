@@ -2,6 +2,8 @@ package ru.itis.hauntedo.simbirtest.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.hauntedo.simbirtest.api.UserApi;
@@ -9,6 +11,9 @@ import ru.itis.hauntedo.simbirtest.dto.TokenPairResponse;
 import ru.itis.hauntedo.simbirtest.dto.request.*;
 import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.UserResponse;
+import ru.itis.hauntedo.simbirtest.model.FileEntity;
+import ru.itis.hauntedo.simbirtest.service.FileService;
+import ru.itis.hauntedo.simbirtest.service.UserAvatarService;
 import ru.itis.hauntedo.simbirtest.service.UserService;
 import ru.itis.hauntedo.simbirtest.service.jwt.JwtTokenService;
 
@@ -21,10 +26,17 @@ public class UserController implements UserApi {
 
     private final UserService userService;
     private final JwtTokenService jwtTokenService;
+    private final FileService fileService;
+    private final UserAvatarService userAvatarService;
 
     @Override
     public ResponseEntity<GridFsResource> getPhotoByUserId(UUID userId) {
-        return null;
+        FileEntity file = fileService.getFile(userAvatarService.getPhoto(userId));
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "filename=\"" + file.getOriginalFileName() + "\"")
+                .body(fileService.getFileFromStorage(file.getObjectId()));
     }
 
     @Override
@@ -34,7 +46,9 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<UUID> saveUserPhoto(UUID userId, UUID fileID) {
-        return null;
+        return ResponseEntity
+                .status(201)
+                .body(userAvatarService.saveUserPhoto(userId, fileID));
     }
 
     @Override
@@ -44,7 +58,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<UUID> updateUserPhoto(UUID userId, UUID fileId) {
-        return null;
+        return ResponseEntity.ok(userAvatarService.saveUserPhoto(userId, fileId));
     }
 
     @Override

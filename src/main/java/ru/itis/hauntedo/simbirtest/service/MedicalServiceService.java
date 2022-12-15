@@ -23,4 +23,6 @@ public interface MedicalServiceService {
     MedicalServiceResponse updateMedicalServiceById(UpdateMedicalServiceRequest medicalServiceRequest, UUID medicalServiceId);
 
     Set<DoctorResponse> addDoctorToService(UUID medicalServiceId, AddDoctorToServiceRequest serviceRequest);
+
+    PageResponse<MedicalServiceResponse> getMedicalServicesByCategory(int page, int size, String categoryCode);
 }

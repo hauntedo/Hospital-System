@@ -34,4 +34,9 @@ public class MedicalServiceRequest {
     @Schema(name = "medical service category id")
     private UUID medicalServiceCategoryId;
 
+    @JsonProperty("code")
+    @Schema(description = "medical service code")
+    private String code;
+
+
 }

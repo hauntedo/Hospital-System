@@ -36,8 +36,8 @@ public class DoctorController implements DoctorApi {
     }
 
     @Override
-    public ResponseEntity<PageResponse<DoctorResponse>> getDoctors(int page, int size) {
-        return ResponseEntity.ok(doctorService.getDoctors(page, size));
+    public ResponseEntity<PageResponse<DoctorResponse>> getDoctors(int page, int size, String serviceCode, String categoryCode) {
+        return ResponseEntity.ok(doctorService.getDoctors(page, size, serviceCode, categoryCode));
     }
 
     @Override

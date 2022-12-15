@@ -14,7 +14,7 @@ public interface DoctorService {
 
     void deleteDoctorById(UUID doctorId);
 
-    PageResponse<DoctorResponse> getDoctors(int page, int size);
+    PageResponse<DoctorResponse> getDoctors(int page, int size, String serviceCode, String categoryCode);
 
     DoctorResponse getDoctorById(UUID doctorId);
 }
