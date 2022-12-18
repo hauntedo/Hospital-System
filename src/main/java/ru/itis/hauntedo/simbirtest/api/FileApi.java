@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.itis.hauntedo.simbirtest.dto.response.ExceptionResponse;
@@ -44,6 +45,8 @@ public interface FileApi {
                             )
                     })
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PostMapping(value = "/upload", produces = APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<FileResponse> upload(@RequestPart("file") MultipartFile file,
                                         @RequestPart("fileType") String fileType);
@@ -59,6 +62,8 @@ public interface FileApi {
                             )
                     })
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @GetMapping(value = "/download/{id}")
     ResponseEntity<GridFsResource> downloadFile(@PathVariable("id") UUID fileId);
 

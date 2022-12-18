@@ -7,16 +7,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.hauntedo.simbirtest.dto.TokenPairResponse;
 import ru.itis.hauntedo.simbirtest.dto.request.*;
-import ru.itis.hauntedo.simbirtest.dto.response.ExceptionResponse;
-import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
-import ru.itis.hauntedo.simbirtest.dto.response.UserResponse;
+import ru.itis.hauntedo.simbirtest.dto.response.*;
 import ru.itis.hauntedo.simbirtest.validation.ValidationError;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -36,6 +38,8 @@ public interface UserApi {
                     }
             )
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @GetMapping(value = "/{id}/photo")
     ResponseEntity<GridFsResource> getPhotoByUserId(@PathVariable("id") UUID userId);
 
@@ -57,6 +61,7 @@ public interface UserApi {
                             )
                     })
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> getUserById(@PathVariable("id") UUID userId);
@@ -79,6 +84,7 @@ public interface UserApi {
                             )
                     })
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PostMapping(value = "/{id}/photo")
     ResponseEntity<UUID> saveUserPhoto(@PathVariable("id") UUID userId, @RequestParam("file") UUID fileID);
@@ -109,6 +115,7 @@ public interface UserApi {
                     }
             )
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> updateUser(@PathVariable("id") UUID userId,
@@ -137,6 +144,7 @@ public interface UserApi {
                             )
                     })
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PutMapping(value = "/{id}/photo")
     ResponseEntity<UUID> updateUserPhoto(@PathVariable("id") UUID userId, @RequestParam("file") UUID fileId);
@@ -217,6 +225,7 @@ public interface UserApi {
                     }
             )
     })
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @PutMapping(value = "/{id}/password", consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<SuccessResponse> updateUserPassword(@PathVariable("id") UUID userId, @RequestBody @Valid UpdatePasswordRequest passwordRequest);
@@ -280,6 +289,17 @@ public interface UserApi {
     })
     @PostMapping(value = "/password/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     ResponseEntity<TokenPairResponse> createPassword(@PathVariable("id") UUID userId, @RequestBody @Valid UserPasswordRequest passwordRequest);
+
+    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
+    @PreAuthorize("hasAnyRole('PATIENT','DOCTOR')")
+    @GetMapping(value = "/{user-id}/appointments", produces = APPLICATION_JSON_VALUE)
+    ResponseEntity<PageResponse<AppointmentResponse>> getAppointments(
+            @PathVariable("user-id") UUID userId,
+            @RequestParam(name = "size", required = false) int size,
+            @RequestParam(name = "page", required = false) int page,
+            @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime start,
+            @RequestParam(name = "op", required = false) String op,
+            @RequestParam(name = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 
 
 

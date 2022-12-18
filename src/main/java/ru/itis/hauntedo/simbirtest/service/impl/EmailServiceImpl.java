@@ -43,15 +43,42 @@ public class EmailServiceImpl implements EmailService {
         this.mailSender = mailSender;
     }
 
-    public void send(Map<String, String> emailData, String subject) {
+    public void send(Map<String, String> emailData, String subject, String operation) {
+        switch (operation) {
+            case "CONFIRM":
+                sendConfirmEmail(emailData, subject);
+            case "NOTIFY":
+                sendNotifyEmail(emailData, subject);
+        }
+    }
+
+    private void sendNotifyEmail(Map<String, String> emailData, String subject) {
         try {
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-            helper.setFrom(from);
-            helper.setTo(emailData.get("user_email"));
-            helper.setSubject(subject);
+            MimeMessage mimeMessage = getMimeMessage(emailData, subject);
+            String message = "You You have an appointment on " + emailData.get("time");
+            mimeMessage.setText(message, "utf-8");
+            log.info("Sending message by mail {}", emailData.get("user_email"));
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            log.error("Fail sending message: {}", e.getMessage());
+            throw new FailureMessageSendException(e.getMessage());
+        }
+    }
+
+    private MimeMessage getMimeMessage(Map<String, String> emailData, String subject) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+        helper.setFrom(from);
+        helper.setTo(emailData.get("user_email"));
+        helper.setSubject(subject);
+        return mimeMessage;
+    }
+
+    private void sendConfirmEmail(Map<String, String> emailData, String subject) {
+        try {
+            MimeMessage mimeMessage = getMimeMessage(emailData, subject);
             mimeMessage.setContent(generateTemplateUsingFreemarker(emailData.get("user_firstname"),
-                    emailData.get("confirm_code")), "text/html");
+                    emailData.get("confirm_code")), "text/html; charset=utf-8");
             log.info("Sending message by mail {}", emailData.get("user_email"));
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {

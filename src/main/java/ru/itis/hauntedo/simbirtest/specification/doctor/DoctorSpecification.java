@@ -1,4 +1,4 @@
-package ru.itis.hauntedo.simbirtest.specification;
+package ru.itis.hauntedo.simbirtest.specification.doctor;
 
 import org.springframework.data.jpa.domain.Specification;
 import ru.itis.hauntedo.simbirtest.model.Doctor;

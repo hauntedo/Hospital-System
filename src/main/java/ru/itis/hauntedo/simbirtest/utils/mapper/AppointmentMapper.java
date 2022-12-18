@@ -13,10 +13,12 @@ public interface AppointmentMapper {
 
     AppointmentResponse toResponse(Appointment appointment);
 
+    @Mapping(target = "start", ignore = true)
     Appointment toEntity(AppointmentRequest appointmentRequest);
     List<AppointmentResponse> toList(List<Appointment> appointments);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    @Mapping(target = "start", ignore = true)
     void updateEntity(@MappingTarget Appointment appointment, UpdateAppointmentRequest appointmentRequest);
 }

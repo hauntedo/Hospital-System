@@ -25,6 +25,6 @@ public class AppointmentDetailFile extends AbstractEntity {
     private FileEntity file;
 
     @OneToOne
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
+    @JoinColumn(name = "appointment_detail_id")
+    private AppointmentDetail appointmentDetail;
 }

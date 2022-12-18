@@ -19,10 +19,10 @@ import java.util.UUID;
 @Schema(name = "appointment request")
 public class AppointmentRequest {
 
-    @JsonProperty("date")
+    @JsonProperty("start")
     @NotBlank
-    @Schema(name = "appointment date")
-    private Instant date;
+    @Schema(name = "appointment start")
+    private LocalDateTime start;
 
     @JsonProperty("medical_service_id")
     @NotBlank

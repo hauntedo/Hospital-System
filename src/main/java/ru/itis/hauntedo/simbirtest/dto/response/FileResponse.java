@@ -35,4 +35,5 @@ public class FileResponse {
     @JsonProperty("file_type")
     @Schema(name = "file type", example = "USER_PHOTO")
     private String fileType;
+
 }

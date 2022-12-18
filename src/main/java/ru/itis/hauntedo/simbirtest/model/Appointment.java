@@ -26,8 +26,14 @@ import java.util.Calendar;
 @Table(name = "doctor_appointment")
 public class Appointment extends AbstractEntity {
 
-    @Column(name = "appointment_date")
-    private Instant date;
+    @Column(name = "appointment_date_start", columnDefinition = "time")
+    private LocalTime start;
+
+    @Column(name = "appointment_date_end", columnDefinition = "time")
+    private LocalTime end;
+
+    @Column(name = "appointment_date", columnDefinition = "date")
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")

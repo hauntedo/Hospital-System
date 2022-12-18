@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +17,14 @@ import javax.persistence.Table;
 @Table(name = "appointment_info")
 public class AppointmentDetail extends AbstractEntity {
 
+    @Column(name = "recommendation")
+    private String recommendation;
 
+    @Column(name = "general_info")
+    private String generalInfo;
+
+    @Column(name = "anamnesis")
+    private String anamnesis;
 
     @OneToOne
     @JoinColumn(name = "appointment_id")

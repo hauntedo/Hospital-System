@@ -9,15 +9,20 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itis.hauntedo.simbirtest.api.UserApi;
 import ru.itis.hauntedo.simbirtest.dto.TokenPairResponse;
 import ru.itis.hauntedo.simbirtest.dto.request.*;
+import ru.itis.hauntedo.simbirtest.dto.response.AppointmentResponse;
+import ru.itis.hauntedo.simbirtest.dto.response.PageResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.SuccessResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.UserResponse;
 import ru.itis.hauntedo.simbirtest.model.FileEntity;
+import ru.itis.hauntedo.simbirtest.service.AppointmentService;
 import ru.itis.hauntedo.simbirtest.service.FileService;
 import ru.itis.hauntedo.simbirtest.service.UserAvatarService;
 import ru.itis.hauntedo.simbirtest.service.UserService;
 import ru.itis.hauntedo.simbirtest.service.jwt.JwtTokenService;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +33,7 @@ public class UserController implements UserApi {
     private final JwtTokenService jwtTokenService;
     private final FileService fileService;
     private final UserAvatarService userAvatarService;
+    private final AppointmentService appointmentService;
 
     @Override
     public ResponseEntity<GridFsResource> getPhotoByUserId(UUID userId) {
@@ -88,6 +94,11 @@ public class UserController implements UserApi {
         return ResponseEntity.ok(
                 jwtTokenService.generateTokenCouple(
                         userService.createPassword(userId, passwordRequest)));
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<AppointmentResponse>> getAppointments(UUID userId, int size, int page, LocalTime start, String op, LocalDate date) {
+        return ResponseEntity.ok(appointmentService.getAvailableAppointmentByUser(userId, size, page, start, op, date));
     }
 
     @Override

@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: v1.0/release.yaml
+
+  - include:
+      relativeToChangelogFile: true
+      file: v1.0/init-db.yaml

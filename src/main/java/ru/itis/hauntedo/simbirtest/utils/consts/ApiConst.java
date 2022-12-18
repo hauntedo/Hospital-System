@@ -9,4 +9,8 @@ public class ApiConst {
 
     public static final String BEARER = "Bearer ";
     public static final String ROLE = "ROLE";
+
+    public static final String EMAIL_CONFIRM = "CONFIRM";
+
+    public static final String EMAIL_NOTIFY = "NOTIFY";
 }

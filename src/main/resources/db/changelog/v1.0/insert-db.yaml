@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1671392239644-31
+      author: Rustem (generated)
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: id
+                  value: 5e1bef16-7660-4d4d-96e4-92c0aaf95f66
+              - column:
+                  name: create_date
+                  value: 2022-12-18 13:36:34.880543
+              - column:
+                  name: email
+                  value: admin@admin.admin
+              - column:
+                  name: first_name
+                  value: admin
+              - column:
+                  name: last_name
+                  value: admin
+              - column:
+                  name: hash_password
+                  value: $2a$10$foLIgwfF9s2Kb6WOuJoL6OBOBcGwbwE4aELenp9J8gLNxNRF66Giu
+              - column:
+                  name: phone
+                  value: admin
+              - column:
+                  name: user_role
+                  value: ADMIN
+              - column:
+                  name: user_state
+                  value: CONFIRMED
+            schemaName: public
+            tableName: account

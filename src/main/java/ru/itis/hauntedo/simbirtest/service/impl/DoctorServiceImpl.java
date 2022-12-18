@@ -10,13 +10,11 @@ import org.springframework.stereotype.Service;
 import ru.itis.hauntedo.simbirtest.dto.request.DoctorRequest;
 import ru.itis.hauntedo.simbirtest.dto.request.UpdateDoctorRequest;
 import ru.itis.hauntedo.simbirtest.dto.response.DoctorResponse;
-import ru.itis.hauntedo.simbirtest.dto.response.MedicalServiceCategoryResponse;
 import ru.itis.hauntedo.simbirtest.dto.response.PageResponse;
 import ru.itis.hauntedo.simbirtest.exception.badrequest.RepeatablePasswordException;
 import ru.itis.hauntedo.simbirtest.exception.notfound.DoctorNotFoundException;
 import ru.itis.hauntedo.simbirtest.exception.badrequest.OccupiedDataException;
 import ru.itis.hauntedo.simbirtest.model.Doctor;
-import ru.itis.hauntedo.simbirtest.model.MedicalServiceCategory;
 import ru.itis.hauntedo.simbirtest.repository.DoctorRepository;
 import ru.itis.hauntedo.simbirtest.repository.UserRepository;
 import ru.itis.hauntedo.simbirtest.service.DoctorService;
@@ -26,8 +24,8 @@ import ru.itis.hauntedo.simbirtest.utils.mapper.DoctorMapper;
 
 import java.util.UUID;
 
-import static ru.itis.hauntedo.simbirtest.specification.DoctorSpecification.byMedicalServiceCategory;
-import static ru.itis.hauntedo.simbirtest.specification.DoctorSpecification.byMedicalServiceCode;
+import static ru.itis.hauntedo.simbirtest.specification.doctor.DoctorSpecification.byMedicalServiceCategory;
+import static ru.itis.hauntedo.simbirtest.specification.doctor.DoctorSpecification.byMedicalServiceCode;
 
 @Service
 @RequiredArgsConstructor

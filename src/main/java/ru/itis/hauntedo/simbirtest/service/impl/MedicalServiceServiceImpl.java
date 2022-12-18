@@ -29,7 +29,7 @@ import ru.itis.hauntedo.simbirtest.utils.mapper.MedicalServiceMapper;
 import java.util.Set;
 import java.util.UUID;
 
-import static ru.itis.hauntedo.simbirtest.specification.MedicalServiceSpecification.byCategoryCode;
+import static ru.itis.hauntedo.simbirtest.specification.medicalservice.MedicalServiceSpecification.byCategoryCode;
 
 @Service
 @RequiredArgsConstructor

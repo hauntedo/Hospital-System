@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import static ru.itis.hauntedo.simbirtest.utils.consts.ApiConst.EMAIL_CONFIRM;
 import static ru.itis.hauntedo.simbirtest.utils.enums.ConfirmCodeState.EXPIRED;
 import static ru.itis.hauntedo.simbirtest.utils.enums.ConfirmCodeState.NOT_EXPIRED;
 
@@ -39,7 +40,7 @@ public class ConfirmServiceImpl implements ConfirmService {
         emailData.put("user_email", user.getEmail());
         emailData.put("user_firstname", user.getFirstName());
         emailData.put("confirm_code", confirmCode.getConfirmCode().toString());
-        emailService.send(emailData, "Confirm account");
+        new Thread(() -> emailService.send(emailData, "Confirm account", EMAIL_CONFIRM)).start();
         confirmCodeRepository.save(confirmCode);
     }
 

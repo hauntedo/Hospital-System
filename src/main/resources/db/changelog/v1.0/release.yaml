@@ -1,0 +1,200 @@
+databaseChangeLog:
+- changeSet:
+    id: 1671392239644-1
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: doctor
+        constraintName: fk4oyx18lx48un2yj8hdfwwa8mi
+- changeSet:
+    id: 1671392239644-2
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: account_refresh_token
+        constraintName: fk4wnur863wh2qnmrc12ufb0ski
+- changeSet:
+    id: 1671392239644-3
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: doctor_appointment
+        constraintName: fk6oqkynkceg50hy67s0f2cbqc6
+- changeSet:
+    id: 1671392239644-4
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: appointment_info
+        constraintName: fkfroivsbjria8oiboemki5tim
+- changeSet:
+    id: 1671392239644-5
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: appointment_detail_file
+        constraintName: fkh8lm3t4vf4hs8b1ab0wajyai2
+- changeSet:
+    id: 1671392239644-6
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: medical_service_doctor
+        constraintName: fkj9tuuhnfo3l2ge82cep4hqwkx
+- changeSet:
+    id: 1671392239644-7
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: confirm_code
+        constraintName: fkmdagulbxo9924pdwdkm3o70g8
+- changeSet:
+    id: 1671392239644-8
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: user_avatar
+        constraintName: fkn6dv9gppp1eewlmc8df6qjhu1
+- changeSet:
+    id: 1671392239644-9
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: doctor_appointment
+        constraintName: fkqk0wymxcj8shps1yb6t9txe1w
+- changeSet:
+    id: 1671392239644-10
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: medical_service_doctor
+        constraintName: fks1nhhjs9evt8u2g8p8xg5bhws
+- changeSet:
+    id: 1671392239644-11
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: appointment_detail_file
+        constraintName: fksp669ijb5g41fam7spf9hk9e0
+- changeSet:
+    id: 1671392239644-12
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: user_avatar
+        constraintName: fksvd1tguy7xlah881j9o714nlq
+- changeSet:
+    id: 1671392239644-13
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: medical_service
+        constraintName: fktqq383pcma2ti2gchy6btrd7f
+- changeSet:
+    id: 1671392239644-14
+    author: Rustem (generated)
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: doctor_appointment
+        constraintName: fkuurnj3pc0o1p3dwlvl4tm6us
+- changeSet:
+    id: 1671392239644-15
+    author: Rustem (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: uk_a2fh7sg4he8lo18h3qnf2hu9u
+        tableName: medical_service
+- changeSet:
+    id: 1671392239644-16
+    author: Rustem (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: uk_dgdnj692f2g5ebicy1xyc2l3w
+        tableName: account
+- changeSet:
+    id: 1671392239644-17
+    author: Rustem (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: uk_md900u4jxik3818dj7en4e579
+        tableName: medical_service_category
+- changeSet:
+    id: 1671392239644-18
+    author: Rustem (generated)
+    changes:
+    - dropUniqueConstraint:
+        constraintName: uk_q0uja26qgu1atulenwup9rxyr
+        tableName: account
+- changeSet:
+    id: 1671392239644-19
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: account
+- changeSet:
+    id: 1671392239644-20
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: account_refresh_token
+- changeSet:
+    id: 1671392239644-21
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: appointment_detail_file
+- changeSet:
+    id: 1671392239644-22
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: appointment_info
+- changeSet:
+    id: 1671392239644-23
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: confirm_code
+- changeSet:
+    id: 1671392239644-24
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: doctor
+- changeSet:
+    id: 1671392239644-25
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: doctor_appointment
+- changeSet:
+    id: 1671392239644-26
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: file
+- changeSet:
+    id: 1671392239644-27
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: medical_service
+- changeSet:
+    id: 1671392239644-28
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: medical_service_category
+- changeSet:
+    id: 1671392239644-29
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: medical_service_doctor
+- changeSet:
+    id: 1671392239644-30
+    author: Rustem (generated)
+    changes:
+    - dropTable:
+        tableName: user_avatar
+
