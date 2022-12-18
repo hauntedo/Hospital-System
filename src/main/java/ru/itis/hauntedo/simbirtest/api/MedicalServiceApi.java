@@ -66,7 +66,7 @@ public interface MedicalServiceApi {
                                     schema = @Schema(implementation = ExceptionResponse.class))
                     })
     })
-    @PreAuthorize("hasAnyRole('PATIENT', 'DOCTOR', 'ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true)
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     ResponseEntity<MedicalServiceResponse> getMedicalServiceById(@PathVariable("id") UUID medicalServiceId);
